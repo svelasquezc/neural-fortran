@@ -18,7 +18,7 @@ contains
     else
       call net % set_activation('sigmoid')
     end if
-    call net % sync(1)
+    call net % sync(1_ik)
   end function net_constructor
 
   pure real(rk) module function accuracy(self, x, y)
@@ -49,14 +49,14 @@ contains
 
       n = size(dims)
       db(n) % array = (layers(n) % a - y) * self % layers(n) % activation_prime(layers(n) % z)
-      dw(n-1) % array = matmul(reshape(layers(n-1) % a, [dims(n-1), 1]),&
-                               reshape(db(n) % array, [1, dims(n)]))
+      dw(n-1) % array = matmul(reshape(layers(n-1) % a, [dims(n-1), 1_ik]),&
+                               reshape(db(n) % array, [1_ik, dims(n)]))
 
       do n = size(dims) - 1, 2, -1
         db(n) % array = matmul(layers(n) % w, db(n+1) % array)&
                       * self % layers(n) % activation_prime(layers(n) % z)
-        dw(n-1) % array = matmul(reshape(layers(n-1) % a, [dims(n-1), 1]),&
-                                 reshape(db(n) % array, [1, dims(n)]))
+        dw(n-1) % array = matmul(reshape(layers(n-1) % a, [dims(n-1), 1_ik]),&
+                                 reshape(db(n) % array, [1_ik, dims(n)]))
       end do
 
     end associate
@@ -87,7 +87,7 @@ contains
     do n = 1, size(dims) - 1
       self % layers(n) = layer_type(dims(n), dims(n+1))
     end do
-    self % layers(n) = layer_type(dims(n), 1)
+    self % layers(n) = layer_type(dims(n), 1_ik)
     self % layers(1) % b = 0
     self % layers(size(dims)) % w = 0
   end subroutine init

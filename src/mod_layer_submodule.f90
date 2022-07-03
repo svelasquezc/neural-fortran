@@ -52,7 +52,7 @@ contains
     do n = 1, nm - 1
       dw(n) = array2d(dims(n:n+1))
     end do
-    dw(n) = array2d([dims(n), 1])
+    dw(n) = array2d([dims(n), 1_ik])
   end subroutine dw_init
   
   module subroutine db_co_sum(db)

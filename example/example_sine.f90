@@ -6,7 +6,7 @@ program example_sine
   real(rk) :: cumloss, x, y
   real(rk), parameter :: pi = 4 * atan(1._rk)
   integer(ik) :: i
-  net = network_type([1, 5, 1])
+  net = network_type([1_ik, 5_ik, 1_ik])
   cumloss = 0
   do i = 1, 1000000
     call random_number(x)

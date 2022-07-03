@@ -8,23 +8,24 @@ program test_set_activation_function
   ! Finally, we test whether each function produces same 
   ! values as the activation functions set in the layers. 
 
+  use mod_kinds, only: ik, rk
   use mod_activation
   use mod_network, only: network_type
   use mod_random, only: randn
 
   implicit none
   type(network_type) :: net
-  real, allocatable :: x(:)
+  real(rk), allocatable :: x(:)
   integer :: n
   logical, allocatable :: tests(:)
   
   tests = [logical ::]
 
-  x = randn(100)
+  x = randn(100_ik)
 
   ! the network will be created with 
   ! sigmoid activation functions for all layers
-  net = network_type([1, 1, 1, 1, 1])
+  net = network_type([1_ik, 1_ik, 1_ik, 1_ik, 1_ik])
 
   do n = 1, size(net % layers)
     tests = [tests, all(sigmoid(x) == net % layers(n) % activation(x))]

@@ -1,11 +1,12 @@
 program test_network_save
+  use mod_kinds, only: ik, rk
   use mod_network, only: network_type
   implicit none
   type(network_type) :: net1, net2
   integer :: n
   print *, 'Initializing 2 networks with random weights and biases'
-  net1 = network_type([768, 30, 10])
-  net2 = network_type([768, 30, 10])
+  net1 = network_type([768_ik, 30_ik, 10_ik])
+  net2 = network_type([768_ik, 30_ik, 10_ik])
 
   print *, 'Save network 1 into file'
   call net1 % save('test_network.dat')
